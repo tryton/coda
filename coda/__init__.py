@@ -41,7 +41,7 @@ class CODA(object):
     def __init__(self, name, encoding='windows-1252'):
         self.statements = []
 
-        if isinstance(name, (bytes, basestring)):
+        if isinstance(name, (bytes, str)):
             with io.open(name, encoding=encoding, mode='r') as f:
                 self._parse(f)
         else:
@@ -121,7 +121,7 @@ class CODA(object):
             i += 1
 
     def _parse_statement(self, record, statement, desc):
-        for name, (slice_, parser) in desc.iteritems():
+        for name, (slice_, parser) in desc.items():
             value = parser(record[slice_])
             if getattr(statement, name) is not None:
                 assert getattr(statement, name) == value, (name, value,
@@ -129,33 +129,33 @@ class CODA(object):
             setattr(statement, name, value)
 
     def _parse_move(self, record, article, move):
-        for name, (slice_, parser) in MOVE_COMMON.iteritems():
+        for name, (slice_, parser) in MOVE_COMMON.items():
             value = parser(record[slice_])
             if getattr(move, name) is not None:
                 assert getattr(move, name) == value
             else:
                 setattr(move, name, value)
-        for name, (slice_, parser) in MOVE[article].iteritems():
+        for name, (slice_, parser) in MOVE[article].items():
             value = parser(record[slice_])
             if getattr(move, name):
                 value = getattr(move, name) + value
             setattr(move, name, value)
 
     def _parse_information(self, record, article, information):
-        for name, (slice_, parser) in INFORMATION_COMMON.iteritems():
+        for name, (slice_, parser) in INFORMATION_COMMON.items():
             value = parser(record[slice_])
             if getattr(information, name) is not None:
                 assert getattr(information, name) == value
             else:
                 setattr(information, name, value)
-        for name, (slice_, parser) in INFORMATION[article].iteritems():
+        for name, (slice_, parser) in INFORMATION[article].items():
             value = parser(record[slice_])
             if getattr(information, name):
                 value = getattr(information, name) + value
             setattr(information, name, value)
 
     def _parse_free_communication(self, record, free_communication):
-        for name, (slice_, parser) in FREE_COMMUNICATION.iteritems():
+        for name, (slice_, parser) in FREE_COMMUNICATION.items():
             value = parser(record[slice_])
             setattr(free_communication, name, value)
 
@@ -174,6 +174,7 @@ def _amount(value):
     if sign == '1':
         amount *= -1
     return amount / 1000
+
 
 HEADER = {
     'creation_date': (slice(5, 11), _date),
@@ -242,8 +243,8 @@ class _Moves(object):
 
 
 class Statement(_SlotsNone, _Moves):
-    __slots__ = (HEADER.keys() + TRAILER.keys()
-        + OLD_BALANCE.keys() + NEW_BALANCE.keys()
+    __slots__ = (list(HEADER.keys()) + list(TRAILER.keys())
+        + list(OLD_BALANCE.keys()) + list(NEW_BALANCE.keys())
         + ['informations', 'free_communications'])
 
     def __init__(self, *args, **kwargs):
@@ -299,6 +300,7 @@ class _TransactionMixin(object):
     def transaction_category(self):
         return self.transaction_code[5:8]
 
+
 MOVE_COMMON = {
     'sequence': (slice(2, 6), str),
     'detail_sequence': (slice(6, 10), str),
@@ -332,7 +334,7 @@ MOVE = {
 
 class Move(_SlotsNone, _Moves, _TransactionMixin):
     __slots__ = sum(
-        (m.keys() for m in MOVE.itervalues()), MOVE_COMMON.keys())
+        (list(m.keys()) for m in MOVE.values()), list(MOVE_COMMON.keys()))
 
     def __str__(self):
         return self.sequence + self.detail_sequence
@@ -364,6 +366,7 @@ class Move(_SlotsNone, _Moves, _TransactionMixin):
         if type_ == '1':
             return self._communication[1:4]
 
+
 INFORMATION_COMMON = {
     'sequence': (slice(2, 6), str),
     'detail_sequence': (slice(6, 10), str),
@@ -385,8 +388,8 @@ INFORMATION = {
 
 class Information(_SlotsNone, _TransactionMixin):
     __slots__ = sum(
-        (m.keys() for m in INFORMATION.itervalues()),
-        INFORMATION_COMMON.keys())
+        (list(m.keys()) for m in INFORMATION.values()),
+        list(INFORMATION_COMMON.keys()))
 
     def __str__(self):
         return self.sequence + self.detail_sequence
@@ -509,4 +512,4 @@ FREE_COMMUNICATION = {
 
 
 class FreeCommunication(_SlotsNone):
-    __slots__ = FREE_COMMUNICATION.keys()
+    __slots__ = list(FREE_COMMUNICATION.keys())

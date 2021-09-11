@@ -35,9 +35,10 @@ import sys
 from datetime import date
 from decimal import Decimal
 
+from coda import CODA
+
 here = os.path.dirname(__file__)
 readme = os.path.normpath(os.path.join(here, '..', 'README'))
-from coda import CODA
 
 
 class TestCODA(unittest.TestCase):
@@ -61,7 +62,7 @@ class TestCODA(unittest.TestCase):
         return self.statement.informations['OL9456574JBBNEUBCRCL1'][0]
 
     def get_information(self, sequence, detail_sequence):
-        for informations in self.statement.informations.itervalues():
+        for informations in self.statement.informations.values():
             for information in informations:
                 if (information.sequence == sequence
                         and information.detail_sequence == detail_sequence):
@@ -367,6 +368,7 @@ def main():
     suite = test_suite()
     runner = unittest.TextTestRunner()
     return runner.run(suite)
+
 
 if __name__ == '__main__':
     sys.path.insert(0, os.path.dirname(os.path.dirname(
