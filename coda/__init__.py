@@ -7,7 +7,7 @@ from collections import defaultdict
 from datetime import datetime
 from decimal import Decimal
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 __all__ = ['CODA', 'Statement', 'Move', 'Information', 'FreeCommunication']
 
 
