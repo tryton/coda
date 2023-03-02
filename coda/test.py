@@ -5,8 +5,8 @@
 """
 import doctest
 import os
-import unittest
 import sys
+import unittest
 from datetime import date
 from decimal import Decimal
 
