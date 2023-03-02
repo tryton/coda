@@ -19,11 +19,18 @@ def get_version():
 
 setup(name='febelfin-coda',
     version=get_version(),
-    author='B2CK',
-    author_email='info@b2ck.com',
-    url='https://coda.b2ck.com/',
     description='A module to parse CODA files',
     long_description=read('README'),
+    author='Tryton',
+    author_email='foundation@tryton.org',
+    url='https://pypi.org/project/febelfin-coda/',
+    download_url='https://downloads.tryton.org/coda/',
+    project_urls={
+        "Bug Tracker": 'https://bugs.tryton.org/coda',
+        "Forum": 'https://discuss.tryton.org/tags/coda',
+        "Source Code": 'https://code.tryton.org/coda',
+        },
+    keywords='CODA parser',
     packages=find_packages(),
     package_data={
         'coda': ['CODA.txt'],
