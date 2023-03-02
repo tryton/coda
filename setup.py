@@ -21,7 +21,7 @@ def get_version():
 setup(name='febelfin-coda',
     version=get_version(),
     description='A module to parse CODA files',
-    long_description=read('README'),
+    long_description=read('README.rst'),
     author='Tryton',
     author_email='foundation@tryton.org',
     url='https://pypi.org/project/febelfin-coda/',
