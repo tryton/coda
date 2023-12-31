@@ -55,5 +55,4 @@ setup(name='febelfin-coda',
         'Topic :: Utilities',
         ],
     license='BSD',
-    test_suite='coda.test',
     )

@@ -3,9 +3,7 @@
 # this repository contains the full copyright notices and license terms.
 """Test MT940
 """
-import doctest
 import os
-import sys
 import unittest
 from datetime import date
 from decimal import Decimal
@@ -13,7 +11,6 @@ from decimal import Decimal
 from coda import CODA
 
 here = os.path.dirname(__file__)
-readme = os.path.normpath(os.path.join(here, '..', 'README'))
 
 
 class TestCODA(unittest.TestCase):
@@ -323,29 +320,3 @@ class TestCODA(unittest.TestCase):
         amount = sum(m.amount for m in move.moves)
 
         self.assertEqual(amount, move.amount)
-
-
-def test_suite():
-    suite = additional_tests()
-    loader = unittest.TestLoader()
-    suite.addTests(loader.loadTestsFromTestCase(TestCODA))
-    return suite
-
-
-def additional_tests():
-    suite = unittest.TestSuite()
-    if os.path.isfile(readme):
-        suite.addTest(doctest.DocFileSuite(readme, module_relative=False))
-    return suite
-
-
-def main():
-    suite = test_suite()
-    runner = unittest.TextTestRunner()
-    return runner.run(suite)
-
-
-if __name__ == '__main__':
-    sys.path.insert(0, os.path.dirname(os.path.dirname(
-                os.path.dirname(os.path.abspath(__file__)))))
-    sys.exit(not main().wasSuccessful())
