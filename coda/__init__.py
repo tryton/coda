@@ -85,15 +85,11 @@ class CODA(object):
             elif type_ == '9':
                 self._parse_statement(record, statement, TRAILER)
 
-                if (statement.new_balance - statement.old_balance
-                        != statement.total_credit - statement.total_debit):
-                    raise ValueError("Wrong balance")
-                if statement.total_credit != total_credit:
-                    raise ValueError("Wrong total credit")
-                if statement.total_debit != total_debit:
-                    raise ValueError("Wrong total debit")
-                if statement.number_records != i:
-                    raise ValueError("Wrong number of records")
+                assert (statement.new_balance - statement.old_balance
+                    == statement.total_credit - statement.total_debit)
+                assert statement.total_credit == total_credit
+                assert statement.total_debit == total_debit
+                assert statement.number_records == i
                 statement = None
                 total_credit, total_debit = 0, 0
                 i = 0
