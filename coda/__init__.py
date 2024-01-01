@@ -75,7 +75,7 @@ class CODA(object):
             elif type_ == '4':
                 free_communication = FreeCommunication()
                 self._parse_free_communication(record, free_communication)
-                self.free_communications.append(free_communication)
+                statement.free_communications.append(free_communication)
             elif type_ == '8':
                 self._parse_statement(record, statement, NEW_BALANCE)
             elif type_ == '9':
