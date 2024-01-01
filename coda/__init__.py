@@ -40,6 +40,7 @@ class CODA(object):
                         "Unsupported version %d" % statement.version)
             elif type_ == '1':
                 self._parse_statement(record, statement, OLD_BALANCE)
+                i += 1
             elif type_ == '2':
                 article = record[1]
                 if article == '1':
@@ -64,6 +65,7 @@ class CODA(object):
                         parent.append(move)
                     else:
                         raise ValueError('Unknown type: %s' % transaction_type)
+                i += 1
             elif type_ == '3':
                 article = record[1]
                 if article == '1':
@@ -72,12 +74,14 @@ class CODA(object):
                 if article == '1':
                     key = information.bank_reference
                     statement.informations[key].append(information)
+                i += 1
             elif type_ == '4':
                 free_communication = FreeCommunication()
                 self._parse_free_communication(record, free_communication)
                 statement.free_communications.append(free_communication)
             elif type_ == '8':
                 self._parse_statement(record, statement, NEW_BALANCE)
+                i += 1
             elif type_ == '9':
                 self._parse_statement(record, statement, TRAILER)
 
@@ -88,12 +92,11 @@ class CODA(object):
                     raise ValueError("Wrong total credit")
                 if statement.total_debit != total_debit:
                     raise ValueError("Wrong total debit")
-                if statement.number_records != i - 1:
+                if statement.number_records != i:
                     raise ValueError("Wrong number of records")
                 statement = None
                 total_credit, total_debit = 0, 0
                 i = 0
-            i += 1
 
     def _parse_statement(self, record, statement, desc):
         for name, (slice_, parser) in desc.items():
