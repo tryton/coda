@@ -175,7 +175,7 @@ OLD_BALANCE = {
     '_account_structure': (slice(1, 2), str),
     'old_sequence': (slice(2, 5), str),
     '_account_currency': (slice(5, 42), str),
-    'old_balance': (slice(43, 58), _amount),
+    'old_balance': (slice(42, 58), _amount),
     'old_balance_date': (slice(58, 64), _date),
     'account_holder_name': (slice(64, 90), _string),
     'account_description': (slice(90, 125), _string),
