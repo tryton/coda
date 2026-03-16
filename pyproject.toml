@@ -1,0 +1,39 @@
+[build-system]
+requires = ['hatchling >= 1', 'hatch-tryton']
+build-backend = 'hatchling.build'
+
+[project]
+name = 'febelfin-coda'
+dynamic = ['version', 'authors']
+requires-python = '>=3.5'
+maintainers = [
+    {name = "Tryton", email = "foundation@tryton.org"},
+    ]
+description = "A module to parse CODA files"
+readme = 'README.rst'
+license = 'BSD-3-Clause'
+license-files = ['COPYRIGHT']
+keywords = ["CODA", "parser"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Office/Business",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Utilities",
+    ]
+
+[project.urls]
+homepage = "https://www.tryton.org/"
+changelog = "https://code.tryton.org/coda/-/blob/branch/default/CHANGELOG"
+forum = "https://discuss.tryton.org/tags/coda"
+issues = "https://bugs.tryton.org/coda"
+repository = "https://code.tryton.org/coda"
+
+[tool.hatch.version]
+path = 'coda/__init__.py'
+
+[tool.hatch.build]
+packages = ['coda']
+
+[tool.hatch.metadata.hooks.tryton]
+copyright = 'COPYRIGHT'
