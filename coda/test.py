@@ -320,3 +320,34 @@ class TestCODA(unittest.TestCase):
         amount = sum(m.amount for m in move.moves)
 
         self.assertEqual(amount, move.amount)
+
+
+class TestCODAEmpty(unittest.TestCase):
+
+    def setUp(self):
+        self.coda = CODA(os.path.join(here, 'CODA-empty.txt'))
+
+    @property
+    def statement(self):
+        return self.coda.statements[0]
+
+    def test_number_statements(self):
+        self.assertEqual(len(self.coda.statements), 1)
+
+    def test_statement_old_sequence(self):
+        self.assertEqual(self.statement.old_sequence, '202')
+
+    def test_statement_new_sequence(self):
+        self.assertEqual(self.statement.new_sequence, '202')
+
+    def test_statement_old_balance(self):
+        self.assertEqual(self.statement.old_balance, 0)
+
+    def test_statement_old_balance_date(self):
+        self.assertEqual(self.statement.old_balance_date, date(2026, 8, 7))
+
+    def test_statement_new_balance(self):
+        self.assertEqual(self.statement.new_balance, 0)
+
+    def test_statement_new_balance_date(self):
+        self.assertEqual(self.statement.new_balance_date, date(2026, 8, 7))

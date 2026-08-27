@@ -85,6 +85,15 @@ class CODA(object):
             elif type_ == '9':
                 self._parse_statement(record, statement, TRAILER)
 
+                if statement.new_sequence is None:
+                    statement.new_sequence = statement.old_sequence
+
+                if statement.new_balance is None:
+                    statement.new_balance = statement.old_balance
+
+                if statement.new_balance_date is None:
+                    statement.new_balance_date = statement.old_balance_date
+
                 assert (statement.new_balance - statement.old_balance
                     == statement.total_credit - statement.total_debit)
                 assert statement.total_credit == total_credit

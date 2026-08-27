@@ -1,0 +1,3 @@
+0000009082600000        00000000  COMPANY NAME NV           XXXXXXXXXXX00000000000 00000                                       2
+12202BE00000000000000                  EUR0000000000000000070826COMPANY NAME NV           ACCOUNT DESCRIPTION                221
+9               000001000000000000000000000000000000                                                                           1
